@@ -1,8 +1,14 @@
+import getSongs from '@/actions/getSongs';
 import { Header } from '@/components/Header'
 import { ListItem } from '@/components/ListItem'
-import Image from 'next/image'
+import PageContent from '@/components/PageContent';
 
-export default function Home() {
+export const revalidate = 0;
+
+export default async function Home() {
+
+  const songs = await getSongs();
+
   return (
     // <main className="flex min-h-screen flex-col items-center justify-between p-24">
     //   <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
@@ -125,7 +131,7 @@ export default function Home() {
           <h1 className='text-white text-2xl font-semibold'>Newest songs</h1>
         </div>
         <div>
-          List of songs
+          <PageContent songs={songs} />
         </div>
       </div>
     </div>
