@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react'
 
 interface props {
-  songs: Song[];
+  songs: any[];
 }
 
 const LikedContent: React.FC<props> = ({songs}) => {
@@ -17,9 +17,9 @@ const LikedContent: React.FC<props> = ({songs}) => {
   const { isLoading, user } = useUser();
   const onPlay = useOnPlay(songs);
 
-  useEffect(() => {
-    if (!isLoading && !user) router.replace('/');
-  }, [isLoading, user, router]);
+  // useEffect(() => {
+  //   if (!isLoading && !user) router.replace('/');
+  // }, [isLoading, user, router]);
 
   if (songs.length === 0) {
     return (
@@ -30,11 +30,11 @@ const LikedContent: React.FC<props> = ({songs}) => {
   return (
     <div className='flex flex-col gap-y-6 w-full p-6'>
       {songs.map((e) => {
-        return <div className='flex items-center gap-x-4 w-full' key={e.id}>
+        return <div className='flex items-center gap-x-4 w-full' key={e.song.id}>
           <div className='flex-1'>
-            <MediaItem onClick={(id: string) => {onPlay(id)}} data={e} />
+            <MediaItem onClick={(id: string) => {onPlay(id)}} data={e.song} />
           </div>
-          <LikeButton songId={e.id} />
+          <LikeButton songId={e.song.id} />
         </div>
       })}
     </div>

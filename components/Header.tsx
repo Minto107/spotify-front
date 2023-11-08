@@ -25,15 +25,14 @@ export const Header: React.FC<HeaderProps> = ({children, className}) => {
   const supabaseClient = useSupabaseClient();
   const { user } = useUser();
 
+  // const userLoggedIn: boolean = localStorage.getItem("accessToken")? true : false;
+  const userLoggedIn: boolean = false;
+
   const handleLogout = async() => {
-    const { error } = await supabaseClient.auth.signOut();
+    // localStorage.removeItem("accessToken");
     //TODO reset playing songs
     router.refresh();
-
-    if (error)
-      toast.error(error.message);
-    else 
-      toast.success('Logged out!');
+    toast.success('Logged out!');
   }
 
   return (
@@ -48,15 +47,15 @@ export const Header: React.FC<HeaderProps> = ({children, className}) => {
           </button>
         </div>
         <div className='flex md:hidden gap-x-2 items-center'>
-          <button className='rounded-full p-2 bg-white flex items-center justify-center hover:opacity-75 transition'>
+          <button onClick={() => router.push('/')} className='rounded-full p-2 bg-white flex items-center justify-center hover:opacity-75 transition'>
             <HiHome className='text-black' size={20} />
           </button>
-          <button className='rounded-full p-2 bg-white flex items-center justify-center hover:opacity-75 transition'>
+          <button onClick={() => router.push('/search')} className='rounded-full p-2 bg-white flex items-center justify-center hover:opacity-75 transition'>
             <BiSearch className='text-black' size={20} />
           </button>
         </div>
         <div className='flex justify-between items-center gap-x-4'>
-          {user ? (
+          {userLoggedIn ? (
             <div className='flex gap-x-4 items-center'>
               <Button className='bg-white px-6 py-2' onClick={ handleLogout }>
                 Sign out

@@ -11,8 +11,8 @@ interface props {
 }
 
 const MediaItem: React.FC<props> = ({data, onClick}) => {
-  const imgUrl = useLoadImage(data);
-
+  //const imgUrl = useLoadImage(data);
+  const imgUrl = null;
   const handleClick = () => {
     if (onClick) return onClick(data.id);
     //TODO turn on player

@@ -1,7 +1,8 @@
-import getSongsByTitle from "@/actions/getSongsByTitle";
+import getSongsByTitle from "@/actions/springboot/getSongsByTitle";
 import { Header } from "@/components/Header";
 import SearchInput from "@/components/search/SearchInput";
 import SearchContent from "./components/SearchContent";
+import { useSongsByTitle } from "@/hooks/springboot/useSongsByTitle";
 
 const revalidate = 0;
 
@@ -11,8 +12,10 @@ interface props {
   }
 }
 
-const Search = async ({ searchParams }: props) => {
-  const songs = await getSongsByTitle(searchParams.title);
+const Search = ({ searchParams }: props) => {
+  const { songs, loading } = useSongsByTitle(searchParams.title);
+
+  if (loading) return <div>Loading...</div>
 
   return (
     <div className="bg-neutral-900 rounded-lg h-full w-full overflow-hidden overflow-y-hidden">
@@ -24,7 +27,7 @@ const Search = async ({ searchParams }: props) => {
           <SearchInput />
         </div>
       </Header>
-      <SearchContent songs={songs}/>
+      <SearchContent songs={songs!}/>
     </div>
   )
 }

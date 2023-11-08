@@ -1,13 +1,16 @@
-import getLikedSongs from '@/actions/getLikedSongs';
+"use client"
+
 import { Header } from '@/components/Header';
 import Image from 'next/image';
 import React from 'react'
 import LikedContent from './components/LikedContent';
+import { useLikedSongs } from '@/hooks/springboot/useLikedSongs';
 
 export const revalidate = 0;
 
-const Liked = async () => {
-  const songs = await getLikedSongs();
+const Liked = () => {
+  const { songs, loading } = useLikedSongs();
+  if (loading) return <div>Loading...</div>
   return (
     <div className='bg-neutral-900 rounded-lg h-full w-full overflow-hidden overflow-y-auto'>
       <Header>
@@ -27,7 +30,7 @@ const Liked = async () => {
           </div>
         </div>
       </Header>
-      <LikedContent songs={songs} />
+      <LikedContent songs={songs!} />
     </div>
   )
 }
