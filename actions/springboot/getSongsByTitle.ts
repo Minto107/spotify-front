@@ -4,6 +4,8 @@ import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 
 const getSongsByTitle = async (title: string): Promise<Song[]> => {
+  if (title === undefined || title.length === 0 || title === '') return [];
+
   try {
     const res = await axiosInstance.get(`/songs/${title}`);
 

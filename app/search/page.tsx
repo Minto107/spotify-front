@@ -1,3 +1,5 @@
+"use client"
+
 import getSongsByTitle from "@/actions/springboot/getSongsByTitle";
 import { Header } from "@/components/Header";
 import SearchInput from "@/components/search/SearchInput";
