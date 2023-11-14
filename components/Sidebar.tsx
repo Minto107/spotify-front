@@ -10,14 +10,15 @@ import { Library } from './Library';
 import { Song } from '@/types';
 import usePlayer from '@/hooks/player/usePlayer';
 import { twMerge } from 'tailwind-merge';
+import { useUserSongs } from '@/hooks/springboot/useUserSongs';
 
 interface SidebarProps {
     children: React.ReactNode;
-    songs: Song[];
 }
 
-const Sidebar: React.FC<SidebarProps> = ( {children, songs} ) => {
+const Sidebar: React.FC<SidebarProps> = ( {children} ) => {
   const pathname = usePathname();
+  const {songs, loading} = useUserSongs();
   const player = usePlayer();
   const routes = useMemo(() => [
     {
@@ -32,7 +33,8 @@ const Sidebar: React.FC<SidebarProps> = ( {children, songs} ) => {
       active: pathname === '/search',
       href: '/search'
     }
-  ], [])
+  ], []);
+  if (loading) return <div>Loading...</div>
   return (
     <div className={twMerge('flex h-full', player.activeId && 'h-[calc(100%-80px)]')}>
       <div className='hidden md:flex flex-col gap-y-2 bg-black h-full w-[300px] p-2'>
@@ -44,7 +46,7 @@ const Sidebar: React.FC<SidebarProps> = ( {children, songs} ) => {
           </div>
         </Box>
         <Box className='overflow-y-auto h-full'>
-          <Library songs={songs} />
+          <Library songs={songs!} />
         </Box>
       </div>
       <main className='h-full flex-1 overflow-y-auto py-2'>
@@ -54,4 +56,4 @@ const Sidebar: React.FC<SidebarProps> = ( {children, songs} ) => {
   )
 }
 
-export default Sidebar
+export default Sidebar;

@@ -22,7 +22,6 @@ export const Header: React.FC<HeaderProps> = ({children, className}) => {
   const router = useRouter();
   const authModal = useAuthModal();
   
-  const supabaseClient = useSupabaseClient();
   const { user } = useUser();
 
   // const userLoggedIn: boolean = localStorage.getItem("accessToken")? true : false;

@@ -17,7 +17,7 @@ interface props {
 const Search = ({ searchParams }: props) => {
   const { songs, loading } = useSongsByTitle(searchParams.title);
 
-  if (loading) return <div>Loading...</div>
+  if (loading || !songs) return <div>Loading...</div>
 
   return (
     <div className="bg-neutral-900 rounded-lg h-full w-full overflow-hidden overflow-y-hidden">
@@ -29,7 +29,7 @@ const Search = ({ searchParams }: props) => {
           <SearchInput />
         </div>
       </Header>
-      <SearchContent songs={songs!}/>
+      <SearchContent songs={songs}/>
     </div>
   )
 }
