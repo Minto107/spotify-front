@@ -9,7 +9,7 @@ import { BiSearch } from 'react-icons/bi';
 import Button from './Button';
 import useAuthModal from '@/hooks/useAuthModal';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
-import { useUser } from '@/hooks/useUser';
+import { useUser } from '@/hooks/springboot/useUser';
 import { FaUserAlt } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 
@@ -22,10 +22,9 @@ export const Header: React.FC<HeaderProps> = ({children, className}) => {
   const router = useRouter();
   const authModal = useAuthModal();
   
-  const { user } = useUser();
+  const user = useUser();
 
-  // const userLoggedIn: boolean = localStorage.getItem("accessToken")? true : false;
-  const userLoggedIn: boolean = false;
+  const userLoggedIn: boolean = user?.userDetails?.user === null ? false : true;
 
   const handleLogout = async() => {
     // localStorage.removeItem("accessToken");

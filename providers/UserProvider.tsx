@@ -1,6 +1,6 @@
 "use client"
 
-import { MyUserProvider } from "@/hooks/useUser";
+import { MySpringUserProvider } from "@/hooks/springboot/useUser";
 
 interface UserProviderProps {
   children: React.ReactNode;
@@ -8,9 +8,9 @@ interface UserProviderProps {
 
 const UserProvider: React.FC<UserProviderProps> = ({children}) => {
   return (
-    <MyUserProvider>
+    <MySpringUserProvider>
       {children}
-    </MyUserProvider>
+    </MySpringUserProvider>
   )
 }
 

@@ -8,7 +8,7 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import Input from '@/components/form/Input'
 import Button from './Button'
 import toast from 'react-hot-toast'
-import { useUser } from '@/hooks/useUser'
+import { useUser } from '@/hooks/springboot/useUser'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useRouter } from 'next/navigation'
 

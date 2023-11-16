@@ -13,12 +13,15 @@ import Button from './Button'
 import UseLogin, { Login } from '@/actions/springboot/auth/UseLogin'
 import toast from 'react-hot-toast'
 import getLikedSongs from '@/actions/springboot/getLikedSongs'
+import { useUserHook } from '@/hooks/springboot/useUser'
 
 export const AuthModal = () => {
   const router = useRouter();
   const { session } = useSessionContext();
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const { setUser } = useUserHook();
 
   const { register, handleSubmit, reset } = useForm<FieldValues>({
     defaultValues: {
@@ -53,9 +56,11 @@ export const AuthModal = () => {
 
     if (loginSuccess) {
       setIsLoading(false);
-      router.refresh();
+      setUser(true);
+      // window.location.reload();
       onClose();
     } else {
+      setUser(false);
       toast.error('Login failed!');
     }
   }

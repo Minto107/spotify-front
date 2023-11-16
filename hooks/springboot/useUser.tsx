@@ -1,16 +1,11 @@
-import React, { createContext } from 'react'
-
-type User = {
-  id: string;
-  fullName: string;
-  avatarUrl: string | null;
-  email: string;
-  songs: [] | null;
-}
+import getUserDetails from '@/actions/springboot/auth/getUserDetails';
+import { UserDetails } from '@/types';
+import React, { createContext, useContext, useEffect, useState } from 'react'
 
 type UserContextType = {
   token: string | null;
-  user: User | null;
+  user: boolean;
+  userDetails: UserDetails| null;
   isLoading: boolean;
 }
 
@@ -20,22 +15,46 @@ export interface Props {
   [propName: string]: any;
 }
 
-export const MySpringUserProvider = async (props: Props) => {
-  const res = await fetch(`${process.env.API_URL}/auth/user`);
+export const MySpringUserProvider = (props: Props) => {
+  const { user } = useUserHook();
+  const [ userDetails, setUserDetails ] = useState<UserDetails | null>(null);
+  const [ isLoadingData, setIsLoadingData ] = useState(false);
 
-  const userContextRes = await res.json();
+  useEffect(() => {
+    if (!isLoadingData) {
+      setIsLoadingData(true);
+      
+      Promise.allSettled([getUserDetails()]).then((res) => {
+        console.log('Fetching user details...');
+        const userDetailsPromise = res[0];
 
-  if (res.status !== 200) {
-    console.log(userContextRes.message);
+        if (userDetailsPromise.status === 'fulfilled') {
+          setUserDetails(userDetailsPromise.value as UserDetails);
+        }
+        setIsLoadingData(false);
+    })
+  } 
+    
+  }, [user]);
+
+  const token = null;
+
+  const value = {
+    user, userDetails, token, isLoading: isLoadingData
   }
 
-  
+  return <UserContext.Provider value={value} {...props} />
 }
 
-const useUser = () => {
-  return (
-    <div>useUser</div>
-  )
+export const useUser = () => {
+  const context = useContext(UserContext);
+  if (typeof context === undefined) 
+    throw new Error('useUser must be used with MyUserContextProvider')
+  return context;
 }
 
-export default useUser
+export const useUserHook = () => {
+  const [user, setUser] = useState(false);
+
+  return { user, setUser };
+}
