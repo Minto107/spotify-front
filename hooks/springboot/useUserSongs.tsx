@@ -3,8 +3,10 @@
 import getUserSongs from "@/actions/springboot/getUserSongs";
 import { Song } from "@/types";
 import { useEffect, useState } from "react";
+import { useUser } from "./useUser";
 
 export const useUserSongs = () => {
+  const { user } = useUser();
   const [songs, setSongs] = useState<Song[] | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -16,7 +18,7 @@ export const useUserSongs = () => {
     };
 
     fetchSongs();
-  }, []);
+  }, [user]);
 
   return { songs, loading };
 };

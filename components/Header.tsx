@@ -22,9 +22,9 @@ export const Header: React.FC<HeaderProps> = ({children, className}) => {
   const router = useRouter();
   const authModal = useAuthModal();
   
-  const user = useUser();
+  const { user } = useUser();
 
-  const userLoggedIn: boolean = user?.userDetails?.user === null ? false : true;
+  const userLoggedIn: boolean = user;
 
   const handleLogout = async() => {
     // localStorage.removeItem("accessToken");

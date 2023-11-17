@@ -13,7 +13,7 @@ import Button from './Button'
 import UseLogin, { Login } from '@/actions/springboot/auth/UseLogin'
 import toast from 'react-hot-toast'
 import getLikedSongs from '@/actions/springboot/getLikedSongs'
-import { useUserHook } from '@/hooks/springboot/useUser'
+import { useUser, useUserHook } from '@/hooks/springboot/useUser'
 
 export const AuthModal = () => {
   const router = useRouter();
@@ -21,7 +21,7 @@ export const AuthModal = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const { setUser } = useUserHook();
+  const { user, setUser } = useUser();
 
   const { register, handleSubmit, reset } = useForm<FieldValues>({
     defaultValues: {

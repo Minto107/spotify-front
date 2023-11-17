@@ -5,6 +5,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react'
 type UserContextType = {
   token: string | null;
   user: boolean;
+  setUser: React.Dispatch<React.SetStateAction<boolean>>;
   userDetails: UserDetails| null;
   isLoading: boolean;
 }
@@ -16,7 +17,7 @@ export interface Props {
 }
 
 export const MySpringUserProvider = (props: Props) => {
-  const { user } = useUserHook();
+  const [user, setUser] = useState(false);
   const [ userDetails, setUserDetails ] = useState<UserDetails | null>(null);
   const [ isLoadingData, setIsLoadingData ] = useState(false);
 
@@ -40,7 +41,7 @@ export const MySpringUserProvider = (props: Props) => {
   const token = null;
 
   const value = {
-    user, userDetails, token, isLoading: isLoadingData
+    token, user, setUser, userDetails, isLoading: isLoadingData
   }
 
   return <UserContext.Provider value={value} {...props} />
