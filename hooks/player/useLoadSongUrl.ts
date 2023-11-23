@@ -1,14 +1,14 @@
 import { Song } from "@/types";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
 
 const useLoadSong = (song: Song) => {
-  const client = useSupabaseClient();
 
   if (!song) return '';
+  console.log(song);
 
-  const { data: songData } = client.storage.from('songs').getPublicUrl(song.song_path);
+  //TODO fix url?
+  const url = `http://localhost:8080/api/songs/songMp3/${song.id}`
 
-  return songData.publicUrl;
+  return url;
 }
 
 export default useLoadSong;

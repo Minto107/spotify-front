@@ -2,13 +2,13 @@
 
 import useLoadSongUrl from '@/hooks/player/useLoadSongUrl';
 import usePlayer from '@/hooks/player/usePlayer'
-import useGetSongById from '@/hooks/useGetSongById';
+import { useGetSongById } from '@/hooks/springboot/useGetSongById';
 import React from 'react'
 import PlayerContent from './PlayerContent';
 
 const Player = () => {
   const player = usePlayer();
-  const { song } = useGetSongById(player.activeId);
+  const { song } = useGetSongById(player.activeId!);
 
   const songUrl = useLoadSongUrl(song!);
 

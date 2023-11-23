@@ -15,22 +15,22 @@
     "@supabase/auth-helpers-react": "^0.4.2",
     "@supabase/auth-ui-react": "^0.4.6",
     "@supabase/auth-ui-shared": "^0.1.8",
-    "@types/node": "20.9.0",
+    "@types/node": "20.9.2",
     "@types/react": "18.2.37",
     "@types/react-dom": "18.2.15",
     "autoprefixer": "10.4.16",
-    "axios": "^1.6.1",
-    "eslint": "8.53.0",
-    "eslint-config-next": "14.0.1",
-    "next": "14.0.1",
+    "axios": "^1.6.2",
+    "eslint": "8.54.0",
+    "eslint-config-next": "14.0.3",
+    "next": "14.0.3",
     "postcss": "8.4.31",
     "query-string": "^8.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.48.2",
     "react-hot-toast": "^2.4.1",
-    "react-icons": "^4.11.0",
-    "stripe": "^14.3.0",
+    "react-icons": "^4.12.0",
+    "stripe": "^14.5.0",
     "tailwind-merge": "^2.0.0",
     "tailwindcss": "3.3.5",
     "typescript": "5.2.2",
@@ -40,6 +40,6 @@
   },
   "devDependencies": {
     "@types/uniqid": "^5.3.4",
-    "supabase": "^1.110.1"
+    "supabase": "^1.112.0"
   }
 }

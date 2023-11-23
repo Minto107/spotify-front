@@ -23,6 +23,9 @@ export const AuthModal = () => {
 
   const { user, setUser } = useUser();
 
+  // if (user)
+  //   setUser(false);
+
   const { register, handleSubmit, reset } = useForm<FieldValues>({
     defaultValues: {
       email: '',
@@ -55,8 +58,8 @@ export const AuthModal = () => {
     const loginSuccess = await UseLogin(login);
 
     if (loginSuccess) {
-      setIsLoading(false);
       setUser(true);
+      setIsLoading(false);
       // window.location.reload();
       onClose();
     } else {

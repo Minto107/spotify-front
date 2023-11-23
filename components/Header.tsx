@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter } from 'next/navigation';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { twMerge } from 'tailwind-merge';
 import { RxCaretLeft, RxCaretRight } from 'react-icons/rx';
 import { HiHome } from 'react-icons/hi';
@@ -12,6 +12,7 @@ import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { useUser } from '@/hooks/springboot/useUser';
 import { FaUserAlt } from 'react-icons/fa';
 import toast from 'react-hot-toast';
+import getLogout from '@/actions/springboot/auth/getLogout';
 
 interface HeaderProps {
     children: React.ReactNode;
@@ -22,15 +23,18 @@ export const Header: React.FC<HeaderProps> = ({children, className}) => {
   const router = useRouter();
   const authModal = useAuthModal();
   
-  const { user } = useUser();
+  const { user, setUser, userDetails } = useUser();
 
+  // const userLoggedIn: boolean = userDetails.token !== null;
   const userLoggedIn: boolean = user;
 
   const handleLogout = async() => {
-    // localStorage.removeItem("accessToken");
-    //TODO reset playing songs
-    router.refresh();
-    toast.success('Logged out!');
+    const logoutSuccess = await getLogout();
+    if (logoutSuccess) {
+      setUser(false);
+      router.refresh();
+      toast.success('Logged out!');
+    }
   }
 
   return (

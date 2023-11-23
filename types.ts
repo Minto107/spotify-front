@@ -1,15 +1,15 @@
 export interface UserDetails {
   token: string | null;
-  user: User;
+  user: User | null;
 }
 
 export interface Song {
-  id: string;
+  id: number;
   user: User;
   author: string;
   title: string;
-  song_path: string;
-  image_path: string;
+  songPath: string;
+  imagePath: string;
 }
 
 export interface User {
