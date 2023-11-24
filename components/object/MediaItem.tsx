@@ -1,18 +1,17 @@
 "use client"
 
-import useLoadImage from '@/hooks/useLoadImage';
+import useLoadImage from '@/hooks/springboot/useLoadImage';
 import { Song } from '@/types'
 import Image from 'next/image';
 import React from 'react'
 
 interface props {
   data: Song;
-  onClick?: (id: string) => void;
+  onClick?: (id: number) => void;
 }
 
 const MediaItem: React.FC<props> = ({data, onClick}) => {
-  //const imgUrl = useLoadImage(data);
-  const imgUrl = null;
+  const imgUrl = useLoadImage(data.id);
   const handleClick = () => {
     if (onClick) return onClick(data.id);
     //TODO turn on player

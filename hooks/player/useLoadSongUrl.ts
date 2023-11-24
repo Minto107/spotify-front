@@ -3,10 +3,9 @@ import { Song } from "@/types";
 const useLoadSong = (song: Song) => {
 
   if (!song) return '';
-  console.log(song);
 
   //TODO fix url?
-  const url = `http://localhost:8080/api/songs/songMp3/${song.id}`
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/songs/songMp3/${song.id}`
 
   return url;
 }
