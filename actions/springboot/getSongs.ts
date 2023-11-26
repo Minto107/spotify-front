@@ -13,7 +13,7 @@ const getSongs = async (): Promise<Song[]> => {
   } catch (error) {
     const err = error as AxiosError;
     console.error(err);
-    toast.error(err.message);
+    // toast.error(err.message);
   }
   return [];
 }

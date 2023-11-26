@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
+import getIsLikedSong from '@/actions/springboot/getIsLikedSong';
+import axiosInstance from '@/axios.config';
 
 interface props {
   songId: number;
@@ -14,7 +16,7 @@ interface props {
 
 const LikeButton: React.FC<props> = ({songId}) => {
   const router = useRouter();
-  const { supabaseClient } = useSessionContext();
+  const [likeCounter, setLikeCounter] = useState(0);
 
   const authModal = useAuthModal();
   const { user } = useUser();
@@ -22,46 +24,49 @@ const LikeButton: React.FC<props> = ({songId}) => {
   const [ isLiked, setIsLiked ] = useState(false);
 
   useEffect(() => {
-    if (!user?.id) return ;
     const fetchData = async () => {
-      const { data, error } = await supabaseClient.from('liked_songs').select('*').eq('user_id', user.id).eq('song_id', songId).single();
+      // const { data, error } = await supabaseClient.from('liked_songs').select('*').eq('user_id', user.id).eq('song_id', songId).single();
+      const isLikedInfo = await getIsLikedSong(songId);
 
-      if (!error && data) {
+      if (isLikedInfo) {
         setIsLiked(true);
+      } else {
+        setIsLiked(false);
       }
     };
 
     fetchData();
-  }, [songId, supabaseClient, user?.id]);
+  }, [songId, likeCounter]);
 
   const Icon = isLiked ? AiFillHeart : AiOutlineHeart;
 
   const handleLike = async () => {
     if (!user) return authModal.onOpen();
 
-    if (isLiked) {
-      const { error } = await supabaseClient.from('liked_songs').delete().eq('song_id', songId).eq('user_id', user.id);
+    const res = await axiosInstance.get(`/likedsongs/handleLike/${songId}`);
+    setLikeCounter(likeCounter+1);
+    // if (isLiked) {
+    //   const { error } = await supabaseClient.from('liked_songs').delete().eq('song_id', songId).eq('user_id', user.id);
 
-      if (error) toast.error(error.message);
-      else setIsLiked(false);
-    } else {
-      const { error } = await supabaseClient.from('liked_songs').insert({
-        song_id: songId,
-        user_id: user.id
-      });
+    //   if (error) toast.error(error.message);
+    //   else setIsLiked(false);
+    // } else {
+    //   const { error } = await supabaseClient.from('liked_songs').insert({
+    //     song_id: songId,
+    //     user_id: user.id
+    //   });
 
-      if (error) toast.error(error.message);
-      else {
-        setIsLiked(true);
-        toast.success(`Song added to favorites!`);
-      }
-    }
+    //   if (error) toast.error(error.message);
+    //   else {
+    //     setIsLiked(true);
+    //     toast.success(`Song added to favorites!`);
+    //   }
+    // }
 
     router.refresh();
   }
 
   return (
-    // TODO make it green
     <button onClick={handleLike} className='hover:opacity-75 transition'>
       <Icon color={isLiked ? '#22c55e' : 'white'} size={25} />
     </button>

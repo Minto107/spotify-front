@@ -13,6 +13,7 @@ import { useUser } from '@/hooks/springboot/useUser';
 import { FaUserAlt } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 import getLogout from '@/actions/springboot/auth/getLogout';
+import useRegisterModal from '@/hooks/springboot/useRegisterModal';
 
 interface HeaderProps {
     children: React.ReactNode;
@@ -22,8 +23,9 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({children, className}) => {
   const router = useRouter();
   const authModal = useAuthModal();
+  const registerModal = useRegisterModal();
   
-  const { user, setUser, userDetails } = useUser();
+  const { user, setUser } = useUser();
 
   // const userLoggedIn: boolean = userDetails.token !== null;
   const userLoggedIn: boolean = user;
@@ -69,7 +71,7 @@ export const Header: React.FC<HeaderProps> = ({children, className}) => {
           ) : (
           <>
             <div>
-              <Button onClick={ authModal.onOpen } className='bg-transparent text-neutral-300 font-medium'>
+              <Button onClick={ registerModal.onOpen } className='bg-transparent text-neutral-300 font-medium'>
                 Sign Up
               </Button>
             </div>

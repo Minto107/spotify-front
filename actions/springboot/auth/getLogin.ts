@@ -1,7 +1,6 @@
 "use client"
 
 import axiosInstance from '@/axios.config'
-import React from 'react'
 
 export type Login = {
   email: string;
@@ -22,7 +21,7 @@ type UserContextType = {
   isLoading: boolean;
 }
 
-const UseLogin = async (loginForm: Login): Promise<any> => {
+const getLogin = async (loginForm: Login): Promise<any> => {
   try {
     const res = await axiosInstance.post(`/auth/login`, loginForm, {
       withCredentials: true,
@@ -38,4 +37,4 @@ const UseLogin = async (loginForm: Login): Promise<any> => {
   return false;
 }
 
-export default UseLogin
+export default getLogin;

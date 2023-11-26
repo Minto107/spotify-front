@@ -12,6 +12,11 @@ export interface Song {
   imagePath: string;
 }
 
+export interface SongUpload {
+  author: string;
+  title: string;
+}
+
 export interface User {
   id: string;
   fullName: string;

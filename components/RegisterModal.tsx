@@ -2,15 +2,15 @@
 
 import React, { useState } from 'react'
 import { Modal } from './Modal'
-import useAuthModal from '@/hooks/useAuthModal'
 import Input from './form/Input'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import Button from './Button'
-import UseLogin, { Login } from '@/actions/springboot/auth/getLogin'
 import toast from 'react-hot-toast'
-import { useUser, useUserHook } from '@/hooks/springboot/useUser'
+import { useUser } from '@/hooks/springboot/useUser'
+import postRegister from '@/actions/springboot/auth/postRegister'
+import useRegisterModal from '@/hooks/springboot/useRegisterModal'
 
-export const AuthModal = () => {
+export const RegisterModal = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { setUser } = useUser();
@@ -18,12 +18,12 @@ export const AuthModal = () => {
   const { register, handleSubmit, reset } = useForm<FieldValues>({
     defaultValues: {
       email: '',
+      fullName: '',
       password: ''
     }
   })
 
-
-  const { onClose, isOpen } = useAuthModal();
+  const { onClose, isOpen } = useRegisterModal();
   const onChange = (open: boolean) => {
     if (!open) {
       onClose();
@@ -33,25 +33,26 @@ export const AuthModal = () => {
   const onSubmit: SubmitHandler<FieldValues> = async (values) => {
     setIsLoading(true);
 
-    const login: Login = {
+    const register = {
       email: values.email,
+      fullName: values.fullName,
       password: values.password
     }
 
-    const loginSuccess = await UseLogin(login);
+    const registerSuccess = await postRegister(register);
 
-    if (loginSuccess) {
+    if (registerSuccess) {
       setUser(true);
       setIsLoading(false);
       onClose();
     } else {
       setUser(false);
-      toast.error('Login failed!');
+      toast.error('Sign up failed!');
     }
   }
 
   return (
-    <Modal title='Wilkommen back' description='Login to ur acc' isOpen={isOpen} onChange={onChange}>
+    <Modal title='Wilkommen' description='Register your account here' isOpen={isOpen} onChange={onChange}>
         <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-y-4'>
           <div>
             <div className='pb-1'>
@@ -61,11 +62,17 @@ export const AuthModal = () => {
           </div>
           <div>
             <div className='pb-1'>
+                Full Name
+            </div>
+            <Input id='fullName' type='text' {...register('fullName')} placeholder='Full name' />
+          </div>
+          <div>
+            <div className='pb-1'>
                 Password
             </div>
             <Input id='password' type='password' {...register('password')} placeholder='Password' />
           </div>
-          <Button disabled={isLoading} type='submit'>Login</Button>
+          <Button disabled={isLoading} type='submit'>Register</Button>
         </form>
     </Modal>
   )
