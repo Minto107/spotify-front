@@ -42,12 +42,12 @@ export const AuthModal = () => {
 
     if (loginSuccess) {
       setUser(true);
-      setIsLoading(false);
       onClose();
     } else {
       setUser(false);
       toast.error('Login failed!');
     }
+    setIsLoading(false);
   }
 
   return (

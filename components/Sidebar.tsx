@@ -33,7 +33,7 @@ const Sidebar: React.FC<SidebarProps> = ( {children} ) => {
       active: pathname === '/search',
       href: '/search'
     }
-  ], []);
+  ], [pathname]);
   if (loading) return <div>Loading...</div>
   return (
     <div className={twMerge('flex h-full', player.activeId && 'h-[calc(100%-80px)]')}>

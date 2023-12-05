@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = process.env.API_URL === undefined ? 'http://localhost:8080/api' : process.env.API_URL;
+const url = process.env.NEXT_PUBLIC_API_URL === undefined ? 'http://localhost:8080/api' : process.env.NEXT_PUBLIC_API_URL;
 
 const axiosInstance = axios.create({
   // baseURL: `${process.env.API_URL}`

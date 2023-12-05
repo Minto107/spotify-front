@@ -5,9 +5,7 @@ import { AxiosError } from "axios";
 
 const getSongs = async (): Promise<Song[]> => {
   try {
-    const res = await axiosInstance.get('/songs', {
-      withCredentials: false
-    });
+    const res = await axiosInstance.get('/songs');
     const songs = await res.data;
     return (songs as any) || [];
   } catch (error) {

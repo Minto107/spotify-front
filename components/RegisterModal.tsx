@@ -43,12 +43,12 @@ export const RegisterModal = () => {
 
     if (registerSuccess) {
       setUser(true);
-      setIsLoading(false);
       onClose();
     } else {
       setUser(false);
       toast.error('Sign up failed!');
     }
+    setIsLoading(false);
   }
 
   return (

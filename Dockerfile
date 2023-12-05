@@ -1,6 +1,6 @@
-FROM node:latest
+FROM node:latest AS build
 
-RUN apt update && apt upgrade && apt install -y ssh git zsh curl
+RUN apt-get update && apt-get upgrade -y && apt-get install -y ssh git zsh curl
 
 WORKDIR /app
 

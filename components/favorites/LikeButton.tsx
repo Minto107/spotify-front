@@ -2,7 +2,6 @@
 
 import useAuthModal from '@/hooks/useAuthModal';
 import { useUser } from '@/hooks/springboot/useUser';
-import { useSessionContext } from '@supabase/auth-helpers-react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
@@ -25,7 +24,6 @@ const LikeButton: React.FC<props> = ({songId}) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // const { data, error } = await supabaseClient.from('liked_songs').select('*').eq('user_id', user.id).eq('song_id', songId).single();
       const isLikedInfo = await getIsLikedSong(songId);
 
       if (isLikedInfo) {
@@ -45,23 +43,6 @@ const LikeButton: React.FC<props> = ({songId}) => {
 
     const res = await axiosInstance.get(`/likedsongs/handleLike/${songId}`);
     setLikeCounter(likeCounter+1);
-    // if (isLiked) {
-    //   const { error } = await supabaseClient.from('liked_songs').delete().eq('song_id', songId).eq('user_id', user.id);
-
-    //   if (error) toast.error(error.message);
-    //   else setIsLiked(false);
-    // } else {
-    //   const { error } = await supabaseClient.from('liked_songs').insert({
-    //     song_id: songId,
-    //     user_id: user.id
-    //   });
-
-    //   if (error) toast.error(error.message);
-    //   else {
-    //     setIsLiked(true);
-    //     toast.success(`Song added to favorites!`);
-    //   }
-    // }
 
     router.refresh();
   }

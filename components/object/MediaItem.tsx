@@ -19,7 +19,7 @@ const MediaItem: React.FC<props> = ({data, onClick}) => {
   return (
     <div onClick={handleClick} className='flex items-center gap-x-3 cursor-pointer hover:bg-neutral-800/50 w-full p-2 rounded-md'>
       <div className='relative rounded-md min-h-[48px] min-w-[48px] overflow-hidden'>
-        <Image fill src={imgUrl || '/images/liked.jpg'} alt='media item' className='object-cover' />
+        <Image loader={({ src }) => src} fill src={imgUrl || '/images/liked.jpg'} alt='media item' className='object-cover' />
       </div>
       <div className='flex flex-col gap-y-1 overflow-hidden'>
         <p className='text-white truncate'>{data.title}</p>

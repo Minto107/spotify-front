@@ -1,7 +1,6 @@
 "use client"
 
 import React, { useState } from 'react'
-import uniqid from 'uniqid'
 import { Modal } from './Modal'
 import useUploadModal from '@/hooks/useUploadModal'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
@@ -9,7 +8,6 @@ import Input from '@/components/form/Input'
 import Button from './Button'
 import toast from 'react-hot-toast'
 import { useUser } from '@/hooks/springboot/useUser'
-import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useRouter } from 'next/navigation'
 import postSong from '@/actions/springboot/postSong'
 
@@ -18,7 +16,6 @@ export const UploadModal = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useUser();
-  const supabaseClient = useSupabaseClient();
   const {register, handleSubmit, reset} = useForm<FieldValues>({
     defaultValues: {
       author: '',
@@ -80,9 +77,9 @@ export const UploadModal = () => {
         </div>
         <div>
           <div className='pb-1'>
-            Select a cover art
+            Select a cover art (JPG only)
           </div>
-          <Input id='image' type='file' disabled={isLoading} {...register('image', { required: true })} accept='image/*' />
+          <Input id='image' type='file' disabled={isLoading} {...register('image', { required: true })} accept='image/jpeg' />
         </div>
         <Button disabled={isLoading} type='submit'>Add</Button>
       </form>

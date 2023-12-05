@@ -55,7 +55,7 @@ export const MySpringUserProvider = (props: Props) => {
 
 export const useUser = () => {
   const context = useContext(UserContext);
-  if (typeof context === undefined) 
+  if (context === undefined) 
     throw new Error('useUser must be used with MyUserContextProvider')
   return context;
 }

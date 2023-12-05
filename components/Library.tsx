@@ -37,7 +37,7 @@ export const Library: React.FC<props> = ({songs}) => {
       </div>
       <div className='flex flex-col gap-y-2 mt-4 px-3'>
         {songs.map((e) => {
-          return <MediaItem onClick={(id: string) => {onPlay(id)}} key={e.id} data={e} />
+          return <MediaItem onClick={(id: number) => {onPlay(id)}} key={e.id} data={e} />
         })}
       </div>
     </div>
